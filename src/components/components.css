@@ -1,0 +1,10 @@
+
+.staffCardText {
+    padding-left: 12px;
+    text-align: left;
+}
+
+.detailCard :hover {
+    cursor: pointer;
+    background-color: rgb(98, 163, 247);
+}
