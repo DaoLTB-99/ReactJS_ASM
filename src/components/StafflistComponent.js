@@ -9,7 +9,22 @@ class Stafflist extends Component {
         super(props);
 
         this.state = {
-            selectedStaff: null
+            selectedStaff: null,
+            class: null,
+            column: null
+        }
+    }
+
+    onColumnSelect(event) {
+        var column = event.target.value;
+        if (column === "two") {
+            this.setState({ class: 'col-md-6' });
+        } else if (column === "three") {
+            this.setState({ class: 'col-md-4' });
+        } else if (column === "four") {
+            this.setState({ class: 'col-md-3' });
+        } else if (column === "six") {
+            this.setState({ class: 'col-md-2' });
         }
     }
 
@@ -36,19 +51,32 @@ class Stafflist extends Component {
 
     render() {
 
+
         const stafflist = this.props.staffs.map((staff) => {
             return (
-                <div key={staff.id} className='col-12 col-sm-6 col-md-4 mt-1 detailCard'>
+                <div key={staff.id} className={`col-12 col-sm-6 ${this.state.class} mt-1 detailCard`}>
                     <Card onClick={() => this.onStaffSelect(staff)}>
                         <CardTitle>{staff.name}</CardTitle>
                     </Card>
-
                 </div>
             );
         });
 
         return (
             <div className="container">
+                <div>
+                    <span>Bấm vào tên nhân viên để xem thông tin</span>
+                    <form>
+                        <label htmlFor="columns">Chọn cột hiển thị:</label>
+                        <select name="columns" value={this.state.column} onChange={(event) => this.onColumnSelect(event)}>
+                            <option value="two">2 Cột</option>
+                            <option value="three">3 Cột</option>
+                            <option value="four">4 Cột</option>
+                            <option value="six">6 Cột</option>
+                        </select>
+                    </form>
+
+                </div>
                 <div className="row">
                     {stafflist}
                 </div>
