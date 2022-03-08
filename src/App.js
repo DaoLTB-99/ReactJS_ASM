@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
+import { BrowserRouter } from 'react-router-dom';
 import Stafflist from './components/StafflistComponent';
 import './App.css';
 import { DEPARTMENTS, ROLE, STAFFS } from './shared/staffs';
 import Header from './components/HeaderComponent';
 import Footer from './components/FooterComponent';
-
+import Home from './components/HomeComponent';
+import { Switch, Route, Redirect } from 'react-router-dom';
 
 class App extends Component {
 
@@ -19,12 +21,25 @@ class App extends Component {
   }
 
   render() {
+
+    const HomePage = () => {
+      return (
+        <Home />
+      );
+    }
+
     return (
-      <div className="App">
-        <Header />
-        <Stafflist staffs={this.state.staffs} />
-        <Footer />
-      </div>
+      <BrowserRouter>
+        <div className="App">
+          <Header />
+          <Switch>
+            <Route path='/home' component={HomePage} />
+            <Route exact path='/stafflist' component={() => <Stafflist staffs={this.state.staffs} />} />
+            <Redirect to="/home" />
+          </Switch>
+          <Footer />
+        </div>
+      </BrowserRouter>
     );
   }
 }
